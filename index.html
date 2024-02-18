@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptograms</title>
+    <link rel="stylesheet" href="cryptogram.css">
+    <link rel="icon" type="image/x-icon" href="/github-pages/Birb-icon.png">
+    <script src="cryptogram.js"></script>
+</head>
+<body>
+    <div id="home"><a href="/github-pages">Back to Home</a></div>
+    <h2>Cryptograms</h2>
+    <p>
+        Basic cryptogram translation site.
+    </p>
+
+    <div>
+        <b>Plaintext:</b><br>
+        <textarea id="plaintext" placeholder="Enter plaintext here."></textarea>
+
+        <b>Translation key:</b><br>
+        <div id="translator"></div><br>
+        <script>
+            function cipher(encipher)
+            {
+                let src = encipher? "plaintext" : "ciphertext";
+                let dest = encipher? "ciphertext" : "plaintext";
+                let msg = document.getElementById(src).value;
+                let key = get_translation_key();
+                document.getElementById(dest).value = translate(msg, key, encipher);
+            }
+        </script>
+        <button onclick="cipher(true)">Encipher</button>
+        <button onclick="cipher(false)">Decipher</button><br><br>
+
+        <b>Ciphertext:</b><br>
+        <textarea id="ciphertext" placeholder="Enter ciphertext here."></textarea>
+
+        <script>
+            function make_translator()
+            {
+                let params = document.getElementById("translator");
+                for (const c of alpha)
+                {
+                    let label = document.createElement("label");
+                    label.for = c;
+                    label.innerText = `${c}`;
+                    params.appendChild(label);
+
+                    let input = document.createElement("input");
+                    input.value = "";
+                    input.id=c;
+                    params.appendChild(input);
+                }
+            }
+            make_translator();
+
+            function get_translation_key()
+            {
+                let keys = {};
+                for (const c of alpha)
+                    keys[c] = document.getElementById(c).value.toUpperCase();
+                return keys;
+            }
+        </script>
+    </div>
+</body>
