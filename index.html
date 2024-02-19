@@ -33,7 +33,8 @@
             }
         </script>
         <button onclick="cipher(true)">Encipher</button>
-        <button onclick="cipher(false)">Decipher</button><br><br>
+        <button onclick="cipher(false)">Decipher</button>
+        <button onclick="guess_key()">Guess key</button><br><br>
 
         <b>Ciphertext:</b><br>
         <textarea id="ciphertext" placeholder="Enter ciphertext here."></textarea>
@@ -63,6 +64,16 @@
                 for (const c of alpha)
                     keys[c] = document.getElementById(c).value.toUpperCase();
                 return keys;
+            }
+
+            function guess_key()
+            {
+                let txt = document.getElementById("ciphertext").value;
+                let key = find_key(txt);
+                let standard = standard_charfreqs();
+
+                for (var i = 0; i < key.length; i++)
+                    document.getElementById(standard[i].char).value = key[i].char;
             }
         </script>
     </div>
